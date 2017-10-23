@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "redux-zero/react";
-// import { incrementScore, decrementScore, addPlayer, removePlayer, selectPlayer } from "./actions";
+import {selectOption  } from "./actions";
 import "./App.css";
 
 const Header = ({ game }) => {
@@ -30,7 +30,7 @@ const Header = ({ game }) => {
     </div>
   );
 };
-const Questions = ({ game }) => {
+const Questions = ({ game, selectOption }) => {
   // const answers = game.answers[0].map(thisAn => (
   //   <div className="answers row">
   //     <div className="col-md-4">
@@ -41,44 +41,65 @@ const Questions = ({ game }) => {
   //     </div>
   //   </div>
   // ));
-  const question = game.map(thisQ => (
-    <div className="row">
-      <img
-        id="imagenes"
-        height={250}
-        width={250}
-        src={thisQ.image}
-        className="img-responsive center-block"
-      />
-      <div id="questions" />
-      {thisQ.question}
-      <div className="col-md-12 container-fluid" />
-      <div className="answers row">
-        <div className="col-md-4">
-          <a href="#" className="btn btnQuiz btn-default btn-block">
-            <i className="fa fa-user" />
-            {thisQ.answers[0]}
-          </a>
-        </div>
-        <div className="col-md-4">
-          <a href="#" className="btn btnQuiz btn-default btn-block">
-            <i className="fa fa-user" />
-            {thisQ.answers[1]}
-          </a>
-        </div>
-        <div className="col-md-4">
-          <a href="#" className="btn btnQuiz btn-default btn-block">
-            <i className="fa fa-user" />
-            {thisQ.answers[2]}
-          </a>
-        </div>
-      </div>
-      
+  //const question = game.map(thisQ => (
+  // <div className="row">
+  //   <img
+  //     id="imagenes"
+  //     height={250}
+  //     width={250}
+  //     src={thisQ.image}
+  //     className="img-responsive center-block"
+  //   />
+  //   <div id="questions" />
+  //   {thisQ.question}
+  //   <div className="col-md-12 container-fluid" />
+  //   <div className="answers row">
+  //     <div className="col-md-4">
+  //       <a href="#" className="btn btnQuiz btn-default btn-block">
+  //         <i className="fa fa-user" />
+  //         {thisQ.answers[0]}
+  //       </a>
+  //     </div>
+  //     <div className="col-md-4">
+  //       <a href="#" className="btn btnQuiz btn-default btn-block">
+  //         <i className="fa fa-user" />
+  //         {thisQ.answers[1]}
+  //       </a>
+  //     </div>
+  //     <div className="col-md-4">
+  //       <a href="#" className="btn btnQuiz btn-default btn-block">
+  //         <i className="fa fa-user" />
+  //         {thisQ.answers[2]}
+  //       </a>
+  //     </div>
+  //   </div>
+
+  // </div>
+  // )
+  //);
+  const answers = game[0].answers.map(thisA => (
+    <div className="col-md-4">
+      <a  href="#" onClick={selectOption} className="btn btnQuiz btn-default btn-block">
+        <i className="fa fa-user" />
+        {thisA}
+      </a>
     </div>
   ));
   return (
     <section className="contenedor container-fluid text-center">
-      {question}
+      <div className="row">
+        <img
+          id="imagenes"
+          height={250}
+          width={250}
+          src={game[0].image}
+          className="img-responsive center-block"
+        />
+        <div id="questions" />
+        {game[0].question}
+        <div className="col-md-12 container-fluid" />
+        <div className="answers row">{answers}</div>
+      </div>
       <div className="row">
         <div className="col-md-12">
           <div id="divInterno">

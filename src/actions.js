@@ -14,5 +14,5 @@ import store from "./store";
 //         })
 // }
 export const selectOption = (option) =>{
-    const newQuestion = store.getState()    
+    const newQuestion = store.getState()
 }

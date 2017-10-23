@@ -77,7 +77,7 @@ const Questions = ({ game, selectOption }) => {
   // </div>
   // )
   //);
-  const answers = game[0].answers.map(thisA => (
+  const answers = game[preguntaActual].answers.map(thisA => (
     <div className="col-md-4">
       <a  href="#" onClick={selectOption} className="btn btnQuiz btn-default btn-block">
         <i className="fa fa-user" />
@@ -123,7 +123,7 @@ const Questions = ({ game, selectOption }) => {
 // function Stats( props) {
 
 // }
-const App = ({ game }) => {
+const App = ({ game, preguntaActual }) => {
   return (
     <div>
       <Header game={game} />
@@ -166,5 +166,5 @@ const App = ({ game }) => {
   );
 };
 
-const mapToProps = ({ game }) => ({ game });
+const mapToProps = ({ game, preguntaActual }) => ({ game, preguntaActual });
 export default connect(mapToProps)(App);

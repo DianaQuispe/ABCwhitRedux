@@ -42,6 +42,7 @@ import createStore from 'redux-zero';
 //https://ihatetomatoes.net/react-tutorials/abc-quiz/fonts/truck.svg
 const initialState = {
     game : GAME,
+    preguntaActual : 0
 };
 
 const store = createStore(initialState);

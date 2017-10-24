@@ -48,7 +48,7 @@ const Header = ({ game, currentQuestion }) => {
     e.preventDefault();
     selectOption(e);
   }    
-const Questions = ({ game, currentQuestion }) => {
+const Questions = ({ game, currentQuestion, complet }) => {
     const answers = game[currentQuestion].answers.map(thisAn => 
       <form onSubmit={onSubmit}>
           <div className="col-md-4">
@@ -63,6 +63,7 @@ const Questions = ({ game, currentQuestion }) => {
 
   return <section className="contenedor container-fluid text-center">
       <div className="row">
+        {complet && <YourAnswers/>}
         <img id="imagenes" height={250} width={250} src={game[currentQuestion].image} className="img-responsive center-block" />
         <div id="questions" />
         {game[currentQuestion].question}
@@ -110,14 +111,13 @@ const YourAnswers= ({game,answers, currentQuestion}) => {
     </div>
   )
 }
-const App = ({ game, currentQuestion,answers }) => {
+const App = ({ game, currentQuestion,answers, complet }) => {
   return <div>
       <Header game={game} currentQuestion={currentQuestion} />
       <Modal />
-      <Questions game={game} currentQuestion={currentQuestion} />
-      <YourAnswers game={game} answers={answers} currentQuestion={currentQuestion} />
+      <Questions game={game} currentQuestion={currentQuestion} complet={complet} />
     </div>;
 };
 
-const mapToProps = ({ game, currentQuestion, answers }) => ({ game, currentQuestion, answers });
+const mapToProps = ({ game, currentQuestion, answers, complet }) => ({ game, currentQuestion, answers, complet });
 export default connect(mapToProps)(App);

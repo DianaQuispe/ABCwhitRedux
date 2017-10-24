@@ -1,9 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "redux-zero/react";
-import {selectOption  } from "./actions";
+import { selectOption } from "./actions";
 import "./App.css";
 
-const Header = ({ game }) => {
+const Modal = ({}) => {
+  return <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal-dialog" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLabel">
+              Do you want to learn how to build React apps like this?
+            </h5>
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            Learn <b>React</b> from scratch with me, it's easy!
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-primary">
+              Yes, let's go!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>;
+}
+const Header = ({ game, currentQuestion }) => {
   return (
     <div>
       <div className="fixed">
@@ -16,89 +40,36 @@ const Header = ({ game }) => {
           <i className="fa fa-info-circle fa-3x" aria-hidden="true" />
         </a>
       </div>
-      <div className="container text-center">
-        <div className="row">
-          <img
-            id="imagenes"
-            height={250}
-            width={250}
-            src={game.image}
-            className="img-responsive center-block"
-          />
-        </div>
-      </div>
+
     </div>
   );
 };
-const Questions = ({ game, selectOption }) => {
-  // const answers = game.answers[0].map(thisAn => (
-  //   <div className="answers row">
-  //     <div className="col-md-4">
-  //       <a href="#" className="btn btnQuiz btn-default btn-block">
-  //         <i className="fa fa-user" />
-  //         {thisQ.answers[0]}
-  //       </a>
-  //     </div>
-  //   </div>
-  // ));
-  //const question = game.map(thisQ => (
-  // <div className="row">
-  //   <img
-  //     id="imagenes"
-  //     height={250}
-  //     width={250}
-  //     src={thisQ.image}
-  //     className="img-responsive center-block"
-  //   />
-  //   <div id="questions" />
-  //   {thisQ.question}
-  //   <div className="col-md-12 container-fluid" />
-  //   <div className="answers row">
-  //     <div className="col-md-4">
-  //       <a href="#" className="btn btnQuiz btn-default btn-block">
-  //         <i className="fa fa-user" />
-  //         {thisQ.answers[0]}
-  //       </a>
-  //     </div>
-  //     <div className="col-md-4">
-  //       <a href="#" className="btn btnQuiz btn-default btn-block">
-  //         <i className="fa fa-user" />
-  //         {thisQ.answers[1]}
-  //       </a>
-  //     </div>
-  //     <div className="col-md-4">
-  //       <a href="#" className="btn btnQuiz btn-default btn-block">
-  //         <i className="fa fa-user" />
-  //         {thisQ.answers[2]}
-  //       </a>
-  //     </div>
-  //   </div>
+  const onSubmit = e => {
+    e.preventDefault();
+    selectOption(e);
+  }    
+const Questions = ({ game, currentQuestion }) => {
+    const answers = game[currentQuestion].answers.map(thisAn => 
+      <form onSubmit={onSubmit}>
+          <div className="col-md-4">
+            <button 
+             ref={e => (this.refInput = e)}
+              className="btn btnQuiz btn-default btn-block">
+              <i className="fa fa-user" />
+              {thisAn}
+            </button>
+          </div>
+      </form>);
 
-  // </div>
-  // )
-  //);
-  const answers = game[preguntaActual].answers.map(thisA => (
-    <div className="col-md-4">
-      <a  href="#" onClick={selectOption} className="btn btnQuiz btn-default btn-block">
-        <i className="fa fa-user" />
-        {thisA}
-      </a>
-    </div>
-  ));
-  return (
-    <section className="contenedor container-fluid text-center">
+  return <section className="contenedor container-fluid text-center">
       <div className="row">
-        <img
-          id="imagenes"
-          height={250}
-          width={250}
-          src={game[0].image}
-          className="img-responsive center-block"
-        />
+        <img id="imagenes" height={250} width={250} src={game[currentQuestion].image} className="img-responsive center-block" />
         <div id="questions" />
-        {game[0].question}
+        {game[currentQuestion].question}
         <div className="col-md-12 container-fluid" />
-        <div className="answers row">{answers}</div>
+        <div className="answers row">
+          {answers}
+        </div>
       </div>
       <div className="row">
         <div className="col-md-12">
@@ -117,54 +88,36 @@ const Questions = ({ game, selectOption }) => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-// function Stats( props) {
-
-// }
-const App = ({ game, preguntaActual }) => {
-  return (
+const YourAnswers= ({game,answers, currentQuestion}) => {
+  const myQuestions = game.map((question) => {
+  return(
+  <div>
+    <ol>
+      <li>
+        {question.question}
+      </li>
+    </ol>
+  </div>
+  )
+  })
+  return(
     <div>
-      <Header game={game} />
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Do you want to learn how to build React apps like this?
-              </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              Learn <b>React</b> from scratch with me, it's easy!
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-primary">
-                Yes, let's go!
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <Questions game={game} />
+      <h1>Here are your answers:</h1>
+      {myQuestions}
+      {answers[currentQuestion]}
     </div>
-  );
+  )
+}
+const App = ({ game, currentQuestion,answers }) => {
+  return <div>
+      <Header game={game} currentQuestion={currentQuestion} />
+      <Modal />
+      <Questions game={game} currentQuestion={currentQuestion} />
+      <YourAnswers game={game} answers={answers} currentQuestion={currentQuestion} />
+    </div>;
 };
 
-const mapToProps = ({ game, preguntaActual }) => ({ game, preguntaActual });
+const mapToProps = ({ game, currentQuestion, answers }) => ({ game, currentQuestion, answers });
 export default connect(mapToProps)(App);
